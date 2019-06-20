@@ -59,14 +59,6 @@ export function genericAction(type, payload) {
   }
 }
 
-export const fetchFriends = () => dispatch => {
-  dispatch(genericAction(FETCHING_FRIENDS, true))
-  axiosImproved().get(`${friendsApiUrl}/friends`)
-    .then(response => dispatch(getFriends(response.data)))
-    .catch(error => dispatch(genericAction(ERROR, error.message)))
-    .finally(() => dispatch(genericAction(FETCHING_FRIENDS, false)))
-}
-
 export const login = (username, password) => dispatch => {
   dispatch(genericAction(LOGGING_IN, true))
   axios.post(`${friendsApiUrl}/login`, {username, password})
@@ -75,4 +67,12 @@ export const login = (username, password) => dispatch => {
     })
     .catch(error => dispatch(genericAction(ERROR, error.message)))
     .finally(() => dispatch(genericAction(LOGGING_IN, false)))
+}
+
+export const fetchFriends = () => dispatch => {
+  dispatch(genericAction(FETCHING_FRIENDS, true))
+  axiosImproved().get(`${friendsApiUrl}/friends`)
+    .then(response => dispatch(getFriends(response.data)))
+    .catch(error => dispatch(genericAction(ERROR, error.message)))
+    .finally(() => dispatch(genericAction(FETCHING_FRIENDS, false)))
 }

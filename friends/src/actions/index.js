@@ -1,16 +1,17 @@
 import axios from 'axios';
-import { types } from 'util';
 
-export const ADD_FRIENDS = 'ADD_FRIENDS';
+import axiosImproved from '../axios';
+
+export const GET_FRIENDS = 'GET_FRIENDS';
 export const ADD_FRIEND = 'ADD_FRIEND';
 export const UPDATE_FRIEND = 'UPDATE_FRIEND';
 export const DELETE_FRIEND = 'UPDATE_FRIEND';
 
 const friendsApiUrl = 'http://127.0.0.1:5000/api';
 
-export function addFriends(friends) {
+export function getFriends(friends) {
   return {
-    type: ADD_FRIENDS,
+    type: GET_FRIENDS,
     payload: friends,
   }
 } 
@@ -45,13 +46,20 @@ export function deleteFriend(id) {
   }
 }
 
+export const fetchFriends = () => dispatch => {
+  axiosImproved().get(`${friendsApiUrl}/friends`)
+    .then(response => {
+      dispatch(getFriends(response.data))
+    })
+    .catch(error => {
+    })
+}
+
 export const login = (username, password) => dispatch => {
   axios.post(`${friendsApiUrl}/login`, {username, password})
     .then(response => {
-      debugger;
       localStorage.setItem('token', response.data.payload);
     })
     .catch(error => {
-      console.log(error.message)
     })
 }

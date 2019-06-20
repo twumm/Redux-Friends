@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { connect } from 'react-redux';
 import Friend from './Friend';
 import AddFriend from './AddFriend';
+import { fetchFriends } from '../actions';
 
-export default function FriendsList({ friends, requestError, loading, setFriendToEdit, deleteFriend }) {
+export function FriendsList(props) {
+  const {fetchFriends} = props;
+  useEffect(() => {
+    fetchFriends();
+  },[fetchFriends])
+  
   return (
     <div>
       <table>
@@ -14,20 +21,26 @@ export default function FriendsList({ friends, requestError, loading, setFriendT
           </tr>
         </thead>
         <Friend
-          friends={friends}
-          // setFriendToEdit={setFriendToEdit}
-          // deleteFriend={deleteFriend}
+          friends={props.friends}
         />
-        <AddFriend />
       </table>
-      {
+      {/* {
         requestError
         && <p>Sorry! The engineer got cranky! We are unable to get the friends data at this time</p>
       }
       {
         loading
         && <p>Friend is coming!</p>
-      }
+      } */}
+      <AddFriend />
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    friends: state.friends,
+  }
+}
+
+export default connect(mapStateToProps, { fetchFriends })(FriendsList);

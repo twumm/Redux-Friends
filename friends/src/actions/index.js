@@ -84,3 +84,11 @@ export const createFriend = (name, age, email) => dispatch => {
     .catch(error => dispatch(genericAction(ERROR, error.message)))
     .finally(() => dispatch(genericAction(UPDATING_FRIEND, false)))
 }
+
+export const removeFriend = id => dispatch => {
+  dispatch(genericAction(DELETING_FRIEND, true))
+  axiosImproved().delete(`${friendsApiUrl}/friends/${id}`)
+    .then(response => dispatch(getFriends(response.data)))
+    .catch(error => dispatch(genericAction(ERROR, error.message)))
+    .finally(() => dispatch(genericAction(DELETING_FRIEND, false)))
+}

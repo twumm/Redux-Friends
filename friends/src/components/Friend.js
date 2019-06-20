@@ -1,12 +1,17 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
+import { connect } from 'react-redux';
+import { removeFriend } from '../actions'
 
-export default function Friend({ friends, setFriendToEdit, deleteFriend }) {
+export function Friend(props) {
+  const onRemoveFriend = (event, id) => {
+    event.preventDefault();
+    props.removeFriend(id);
+  }
+
   return (
     <tbody>
       {
-        friends.map(friend => (
+        props.friends.map(friend => (
           <tr
             key={friend.id}
             // onClick={event => setFriendToEdit(event, friend)}
@@ -15,7 +20,7 @@ export default function Friend({ friends, setFriendToEdit, deleteFriend }) {
             <td>{friend.email}</td>
             <td>{friend.age}</td>
             <td
-              // onClick={event => deleteFriend(event, friend.id)}
+              onClick={event => onRemoveFriend(event, friend.id)}
             >
               X
             </td>
@@ -25,3 +30,5 @@ export default function Friend({ friends, setFriendToEdit, deleteFriend }) {
     </tbody>
   );
 }
+
+export default connect(null, { removeFriend })(Friend);

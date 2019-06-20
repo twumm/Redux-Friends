@@ -39,10 +39,10 @@ export function friendsReducer(state = initialState, action) {
         deletingFriend: action.payload
       }
     
-    case (types.FETCHING_FRIEND):
+    case (types.FETCHING_FRIENDS):
       return {
         ...state,
-        fetchingFriend: action.payload
+        fetchingFriends: action.payload
       }
       
     case (types.LOGGING_IN):

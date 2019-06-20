@@ -76,3 +76,11 @@ export const fetchFriends = () => dispatch => {
     .catch(error => dispatch(genericAction(ERROR, error.message)))
     .finally(() => dispatch(genericAction(FETCHING_FRIENDS, false)))
 }
+
+export const createFriend = (name, age, email) => dispatch => {
+  dispatch(genericAction(UPDATING_FRIEND, true))
+  axiosImproved().post(`${friendsApiUrl}/friends`, { name, age, email })
+    .then(response => dispatch(getFriends(response.data)))
+    .catch(error => dispatch(genericAction(ERROR, error.message)))
+    .finally(() => dispatch(genericAction(UPDATING_FRIEND, false)))
+}

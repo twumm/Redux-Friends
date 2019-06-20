@@ -6,6 +6,12 @@ export const GET_FRIENDS = 'GET_FRIENDS';
 export const ADD_FRIEND = 'ADD_FRIEND';
 export const UPDATE_FRIEND = 'UPDATE_FRIEND';
 export const DELETE_FRIEND = 'UPDATE_FRIEND';
+export const DELETING_FRIEND = 'DELETING_FRIEND';
+export const FETCHING_FRIENDS = 'FETCHING_FRIENDS';
+export const LOGGING_IN = 'LOGGING_IN';
+export const SAVING_FRIENDS = 'SAVING_FRIENDS';
+export const UPDATING_FRIEND = 'UPDATING_FRIEND';
+export const ERROR = 'ERROR';
 
 const friendsApiUrl = 'http://127.0.0.1:5000/api';
 
@@ -46,20 +52,27 @@ export function deleteFriend(id) {
   }
 }
 
+export function genericAction(type, payload) {
+  return {
+    type,
+    payload,
+  }
+}
+
 export const fetchFriends = () => dispatch => {
+  dispatch(genericAction(FETCHING_FRIENDS, true))
   axiosImproved().get(`${friendsApiUrl}/friends`)
-    .then(response => {
-      dispatch(getFriends(response.data))
-    })
-    .catch(error => {
-    })
+    .then(response => dispatch(getFriends(response.data)))
+    .catch(error => dispatch(genericAction(ERROR, error.message)))
+    .finally(() => dispatch(genericAction(FETCHING_FRIENDS, false)))
 }
 
 export const login = (username, password) => dispatch => {
+  dispatch(genericAction(LOGGING_IN, true))
   axios.post(`${friendsApiUrl}/login`, {username, password})
     .then(response => {
       localStorage.setItem('token', response.data.payload);
     })
-    .catch(error => {
-    })
+    .catch(error => dispatch(genericAction(ERROR, error.message)))
+    .finally(() => dispatch(genericAction(LOGGING_IN, false)))
 }

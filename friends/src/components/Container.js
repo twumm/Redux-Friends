@@ -21,6 +21,7 @@ export default function Container() {
       />
 
       <Route path='/login' component={LoginForm} />
+      <Route path='/friends' component={FriendsList} />
     </div>
   )
 }

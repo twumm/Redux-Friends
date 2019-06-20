@@ -12,6 +12,7 @@ export const LOGGING_IN = 'LOGGING_IN';
 export const SAVING_FRIENDS = 'SAVING_FRIENDS';
 export const UPDATING_FRIEND = 'UPDATING_FRIEND';
 export const ERROR = 'ERROR';
+export const TRIGGER_FRIEND_UPDATE = 'TRIGGER_FRIEND_UPDATE';
 
 const friendsApiUrl = 'http://127.0.0.1:5000/api';
 
@@ -33,17 +34,12 @@ export function addFriend(name, age, email) {
   }
 }
 
-// export function updateFriend(id, name, age, email) {
-//   return {
-//     type: UPDATE_FRIEND,
-//     payload: {
-//       id,
-//       name,
-//       age,
-//       email,
-//     }
-//   }
-// }
+export function setFriendToUpdate(friend) {
+  return {
+    type: TRIGGER_FRIEND_UPDATE,
+    payload: friend,
+  }
+}
 
 export function deleteFriend(id) {
   return {
@@ -93,9 +89,13 @@ export const removeFriend = id => dispatch => {
     .finally(() => dispatch(genericAction(DELETING_FRIEND, false)))
 }
 
-export const updateFriend = (id, name, age, email) => dispatch => {
-  dispatch(genericAction(UPDATING_FRIEND, true))
-  axiosImproved().put(`${friendsApiUrl}/friends/${id}`, { name, age, email })
+export const triggerFriendUpdate = (friend) => dispatch => {
+  dispatch(genericAction(UPDATING_FRIEND, true));
+  dispatch(setFriendToUpdate(friend));
+}
+
+export const modifyFriend = (friend) => dispatch => {
+  axiosImproved().put(`${friendsApiUrl}/friends/${friend.id}`,  (friend.name, friend.age, friend.email) )
     .then(response => dispatch(getFriends(response.data)))
     .catch(error => dispatch(genericAction(ERROR, error.message)))
     .finally(() => dispatch(genericAction(UPDATING_FRIEND, false)))

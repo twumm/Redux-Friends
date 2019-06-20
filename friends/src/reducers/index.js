@@ -8,7 +8,8 @@ const initialState = {
   loggingIn: false,
   savingFriends: false,
   updatingFriend: false,
-  error: null
+  error: null,
+  friend: {},
 }
 
 export function friendsReducer(state = initialState, action) {
@@ -21,17 +22,6 @@ export function friendsReducer(state = initialState, action) {
         ...state,
         friends: [ ...state.friends, action.payload ]
       };
-
-    case (types.UPDATE_FRIEND):
-        return state.friends.map(friend => {
-          if (friend.id === action.payload.id) {
-            return [ ...friend, action.payload ];
-          }
-          return friend;
-        })
-
-    case (types.DELETE_FRIEND):
-      return state.friends.filter(friend => friend.id !== action.payload);
 
     case (types.DELETING_FRIEND):
       return {
@@ -67,6 +57,12 @@ export function friendsReducer(state = initialState, action) {
       return {
         ...state,
         error: action.payload
+      }
+
+    case (types.TRIGGER_FRIEND_UPDATE):
+      return {
+        ...state,
+        friend: action.payload,
       }
 
     default:

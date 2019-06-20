@@ -1,9 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { connect } from 'react-redux';
 
 import { login } from '../actions'
 
 export function LoginForm(props) {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if(token) {
+      props.history.push('/friends')
+    }
+  })
+
   const usernameRef = React.createRef();
   const passwordRef = React.createRef();
 

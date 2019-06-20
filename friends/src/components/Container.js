@@ -10,14 +10,15 @@ export default function Container() {
       <Route
         exact
         path="/"
-        render={() => {
-          if (localStorage.getItem('token')) {
-            return (
-              <FriendsList />
-            )
-          }
-          return <Redirect to='login' />
-        }}
+        component={LoginForm}
+        // render={() => {
+        //   if (localStorage.getItem('token')) {
+        //     return (
+        //       <FriendsList />
+        //     )
+        //   }
+        //   return <Redirect to='login' />
+        // }}
       />
 
       <Route path='/login' component={LoginForm} />

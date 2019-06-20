@@ -22,6 +22,7 @@ export function LoginForm(props) {
     const password = passwordRef.current.value;
 
     props.login(username, password);
+    props.history.push('/friends');
   }
 
   return (

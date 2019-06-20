@@ -1,45 +1,51 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default function AddFriend({ name, age, email, nickname, addFriendInputHandler, addFriend, editMode }) {
+import { createFriend } from '../actions'
+
+export function AddFriend(props) {
+  const nameRef = React.createRef();
+  const ageRef = React.createRef();
+  const emailRef = React.createRef();
+
+  const onAddNewFriend = (event) => {
+    event.preventDefault();
+    const name = nameRef.current.value;
+    const age = ageRef.current.value;
+    const email = emailRef.current.value;
+
+    props.createFriend(name, age, email);
+  }
+
+  
   return (
     <div>
       <h4>Add a friend</h4>
       <form
-        // onSubmit={event => addFriend(event)}
+        onSubmit={event => onAddNewFriend(event)}
       >
         <input
           type="text"
-          name="name"
-          value={name}
           placeholder="Name"
-          onChange={addFriendInputHandler}
+          ref={nameRef}
         />
         <input
           type="text"
-          name="age"
-          value={age}
           placeholder="Age"
-          onChange={addFriendInputHandler}
+          ref={ageRef}
         />
         <input
           type="text"
-          name="email"
-          value={email}
           placeholder="Email"
-          onChange={addFriendInputHandler}
-        />
-        <input
-          type="text"
-          name="nickname"
-          value={nickname}
-          placeholder="Nickname"
-          onChange={addFriendInputHandler}
+          ref={emailRef}
         />
         <input
           type="submit"
-          value={editMode ? 'Update Friend' : 'Add Friend'}
+          // value={editMode ? 'Update Friend' : 'Add Friend'}
         />
       </form>
     </div>
   );
 }
+
+export default connect(null, { createFriend })(AddFriend);

@@ -6,21 +6,21 @@ export default function Friend({ friends, setFriendToEdit, deleteFriend }) {
   return (
     <tbody>
       {
-        // friends.map(friend => (
-        //   <tr
-        //     key={friend.id}
-        //     // onClick={event => setFriendToEdit(event, friend)}
-        //   >
-        //     <td>{friend.name}</td>
-        //     <td>{friend.email}</td>
-        //     <td>{friend.age}</td>
-        //     <td
-        //       // onClick={event => deleteFriend(event, friend.id)}
-        //     >
-        //       X
-        //     </td>
-        //   </tr>
-        // ))
+        friends.map(friend => (
+          <tr
+            key={friend.id}
+            // onClick={event => setFriendToEdit(event, friend)}
+          >
+            <td>{friend.name}</td>
+            <td>{friend.email}</td>
+            <td>{friend.age}</td>
+            <td
+              // onClick={event => deleteFriend(event, friend.id)}
+            >
+              X
+            </td>
+          </tr>
+        ))
       }
     </tbody>
   );

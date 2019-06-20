@@ -6,6 +6,8 @@ export const ADD_FRIEND = 'ADD_FRIEND';
 export const UPDATE_FRIEND = 'UPDATE_FRIEND';
 export const DELETE_FRIEND = 'UPDATE_FRIEND';
 
+const friendsApiUrl = 'http://127.0.0.1:5000/api';
+
 export function addFriends(friends) {
   return {
     type: ADD_FRIENDS,
@@ -41,4 +43,15 @@ export function deleteFriend(id) {
     type: DELETE_FRIEND,
     payload: id,
   }
+}
+
+export const login = (username, password) => dispatch => {
+  axios.post(`${friendsApiUrl}/login`, {username, password})
+    .then(response => {
+      debugger;
+      localStorage.setItem('token', response.data.payload);
+    })
+    .catch(error => {
+      console.log(error.message)
+    })
 }

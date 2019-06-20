@@ -24,14 +24,14 @@ export function FriendsList(props) {
           friends={props.friends}
         />
       </table>
-      {/* {
-        requestError
+      {
+        props.error
         && <p>Sorry! The engineer got cranky! We are unable to get the friends data at this time</p>
       }
       {
-        loading
+        props.fetchingFriends
         && <p>Friend is coming!</p>
-      } */}
+      }
       <AddFriend />
     </div>
   );
@@ -39,7 +39,9 @@ export function FriendsList(props) {
 
 function mapStateToProps(state) {
   return {
-    friends: state.friends,
+    friends: state.friendsReducer.friends,
+    fetchingFriends: state.friendsReducer.fetchingFriends,
+    error: state.friendsReducer.error,
   }
 }
 

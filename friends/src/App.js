@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import { combinedReducers } from './reducers'
+import Container from './components/Container';
 import './App.css';
 
 const store = createStore(
@@ -19,9 +20,7 @@ const store = createStore(
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        
-      </div>
+      <Container />
     </Provider>
   );
 }

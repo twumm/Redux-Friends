@@ -33,17 +33,17 @@ export function addFriend(name, age, email) {
   }
 }
 
-export function updateFriend(id, name, age, email) {
-  return {
-    type: UPDATE_FRIEND,
-    payload: {
-      id,
-      name,
-      age,
-      email,
-    }
-  }
-}
+// export function updateFriend(id, name, age, email) {
+//   return {
+//     type: UPDATE_FRIEND,
+//     payload: {
+//       id,
+//       name,
+//       age,
+//       email,
+//     }
+//   }
+// }
 
 export function deleteFriend(id) {
   return {
@@ -91,4 +91,12 @@ export const removeFriend = id => dispatch => {
     .then(response => dispatch(getFriends(response.data)))
     .catch(error => dispatch(genericAction(ERROR, error.message)))
     .finally(() => dispatch(genericAction(DELETING_FRIEND, false)))
+}
+
+export const updateFriend = (id, name, age, email) => dispatch => {
+  dispatch(genericAction(UPDATING_FRIEND, true))
+  axiosImproved().put(`${friendsApiUrl}/friends/${id}`, { name, age, email })
+    .then(response => dispatch(getFriends(response.data)))
+    .catch(error => dispatch(genericAction(ERROR, error.message)))
+    .finally(() => dispatch(genericAction(UPDATING_FRIEND, false)))
 }

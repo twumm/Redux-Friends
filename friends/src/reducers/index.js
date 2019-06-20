@@ -7,7 +7,7 @@ const initialState = {
 
 export function friendsReducer(state = initialState.friends, action) {
   switch(action.type) {
-    case (types.ADD_FRIENDS):
+    case (types.GET_FRIENDS):
       return action.payload;
     case (types.ADD_FRIEND):
       return [...state, action.payload];
